@@ -1,6 +1,6 @@
 # 🖨️ PrinterDocs - Repositório Inteligente de Manuais
 
-![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Python](https://img.shields.io/badge/Python-3-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
@@ -24,7 +24,7 @@ Um sistema corporativo completo para **gestão, indexação inteligente e consul
 A arquitetura do projeto foi desenhada para ser Full-Stack reativa:
 
 ### Backend ("O Motor")
-* **PHP 8.4** & **Laravel 11.x**: Lógica de rotas, API interna, banco de dados, upload de arquivos e filas de processamento.
+* **PHP 8.4** & **Laravel 13.x**: Lógica de rotas, API interna, banco de dados, upload de arquivos e filas de processamento.
 * **MySQL**: Armazenamento seguro de logs de erros, manuais e dados estruturados.
 
 ### Processamento ("O Cérebro")

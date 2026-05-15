@@ -10,7 +10,7 @@ O projeto foi construído utilizando uma arquitetura moderna Full-Stack, unindo 
 
 ### Backend (Motor e Lógica)
 * **PHP 8.4:** Linguagem base do servidor.
-* **Laravel 11.x:** Framework backend responsável por rotas, autenticação, banco de dados e upload seguro de arquivos.
+* **Laravel 13.x:** Framework backend responsável por rotas, autenticação, banco de dados e upload seguro de arquivos.
 * **MySQL:** Banco de dados relacional poderoso e escalável, garantindo consistência, alta performance e integridade dos dados e logs de falhas.
 
 ### Processamento de IA / Extração (O "Cérebro")
