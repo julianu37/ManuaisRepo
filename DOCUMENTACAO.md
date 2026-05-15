@@ -27,206 +27,38 @@ O projeto foi construído utilizando uma arquitetura moderna Full-Stack, unindo 
 
 ---
 
-## 🚀 2. Como Implantar o Projeto Externamente (Produção - VPS Ubuntu 24.04)
+## 🚀 2. Como Implantar o Projeto (XAMPP / Windows)
 
-Para colocar o projeto em produção, recomendamos uma VPS (DigitalOcean, Hostinger, AWS) rodando **Ubuntu 24.04 LTS**. Siga o passo a passo abaixo (execute como `root`):
+Como o sistema foi idealizado para ser servido via **XAMPP no Windows**, os requisitos e o passo a passo são bastante simplificados.
 
-### 2.1 Preparando o Servidor e Dependências
+**Pré-requisitos do Sistema:**
+1. **XAMPP** instalado e configurado no Windows.
+2. **PHP 8.4** ativado no XAMPP (Substituindo o original se necessário).
+3. **Composer** instalado globalmente no Windows.
+4. **Node.js** (v20+) e **NPM** instalados no Windows.
+5. **Python 3** instalado no Windows (com suporte ao PIP).
 
-**Atualizar o sistema e repositórios base:**
-```bash
-apt update && apt upgrade -y
-apt install software-properties-common curl git unzip -y
-```
+**Passo a passo de Implantação no XAMPP:**
+1. Mova a pasta do projeto (ex: `ManuaisRepo`) para dentro da pasta pública do XAMPP: `C:\xampp\htdocs\`.
+2. Abra o terminal (PowerShell ou Prompt de Comando) dentro da pasta do projeto e instale as dependências essenciais:
+   ```bash
+   composer install --optimize-autoloader --no-dev
+   npm install
+   npm run build
+   python -m pip install PyMuPDF
+   ```
+3. Configure o arquivo de ambiente (`.env`):
+   Copie o arquivo `.env.example` para `.env` se ainda não existir, e ajuste as chaves principais:
+   * `APP_ENV=production` (ou `local` se ainda for editar o código)
+   * `APP_DEBUG=false`
+   * `APP_URL=http://localhost/ManuaisRepo/public`
+   * `DB_CONNECTION=mysql`
+   * `QUEUE_CONNECTION=sync` *(Isso forçará as filas a rodarem instantaneamente, dispensando o uso do Supervisor de Linux).*
+4. No **Painel de Controle do XAMPP**, clique em **Start** para os módulos **Apache** e **MySQL**.
+5. Acesse o sistema via navegador pelo link configurado na variável `APP_URL`.
 
-**Instalar PHP 8.4 e extensões vitais:**
-Adicione o repositório oficial do PHP para Ubuntu e instale as dependências.
-```bash
-add-apt-repository ppa:ondrej/php -y
-apt update
-apt install php8.4 php8.4-fpm php8.4-mysql php8.4-mbstring php8.4-xml php8.4-curl php8.4-zip php8.4-sqlite3 php8.4-bcmath php8.4-intl -y
-```
-
-**Instalar Nginx, MySQL e Supervisor:**
-```bash
-apt install nginx mysql-server supervisor -y
-```
-
-**Instalar Node.js (v20), NPM e Composer:**
-```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install -y nodejs
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
-```
-
-**Instalar Python 3 e PIP (para Inteligência do PyMuPDF):**
-No Ubuntu 24.04, pacotes globais exigem a flag `--break-system-packages` em servidores isolados (ou criar um venv).
-```bash
-apt install python3 python3-pip -y
-pip install PyMuPDF --break-system-packages
-```
-
-### 2.2 Configurando Banco de Dados e phpMyAdmin
-
-Configure o **MySQL**:
-```bash
-mysql -u root -p
-```
-*No terminal do MySQL, digite:*
-```sql
-CREATE DATABASE printerdocs;
-CREATE USER 'printer_user'@'localhost' IDENTIFIED BY 'sua_senha_forte';
-GRANT ALL PRIVILEGES ON printerdocs.* TO 'printer_user'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-```
-
-Instale o **phpMyAdmin** para gerenciar o banco visualmente (Opcional):
-```bash
-apt install phpmyadmin -y
-```
-*(Na tela rosa de seleção do servidor web, pressione **TAB e ENTER sem marcar nada**, pois configuraremos no Nginx manualmente).*
-
-Crie um link simbólico para o Nginx ler o phpMyAdmin:
-```bash
-ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
-```
-*Acesse por: `http://ip-do-seu-servidor/phpmyadmin`*
-
-### 2.3 Instalando o Projeto Laravel
-
-Vá para a pasta web e clone o repositório:
-```bash
-cd /var/www
-git clone https://github.com/julianu37/ManuaisRepo.git printerdocs
-cd printerdocs
-```
-
-Prepare o **Ambiente (.env)** e instale as bibliotecas:
-```bash
-cp .env.example .env
-nano .env
-```
-*Ajuste no arquivo:*
-```env
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://seusite.com.br
-DB_DATABASE=printerdocs
-DB_USERNAME=printer_user
-DB_PASSWORD=sua_senha_forte
-QUEUE_CONNECTION=database
-```
-
-Gere a chave e prepare os bancos e links:
-```bash
-composer install --optimize-autoloader --no-dev
-php artisan key:generate
-php artisan migrate --force
-php artisan storage:link
-npm install
-npm run build
-```
-
-**Ajuste de Permissões Críticas:**
-O servidor web Nginx roda sob o usuário `www-data`. Precisamos dar as permissões exatas:
-```bash
-chown -R www-data:www-data /var/www/printerdocs
-find /var/www/printerdocs -type f -exec chmod 664 {} \;
-find /var/www/printerdocs -type d -exec chmod 775 {} \;
-chmod -R 775 /var/www/printerdocs/storage
-chmod -R 775 /var/www/printerdocs/bootstrap/cache
-```
-
-### 2.4 Configurando o Domínio e SSL (Nginx)
-
-Crie o arquivo de configuração de rota do seu domínio:
-```bash
-nano /etc/nginx/sites-available/printerdocs
-```
-*Cole o seguinte conteúdo (Lembre-se de mudar `seusite.com.br`):*
-```nginx
-server {
-    listen 80;
-    server_name seusite.com.br;
-    root /var/www/printerdocs/public;
-
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Type-Options "nosniff";
-    index index.php;
-    charset utf-8;
-
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-
-    error_page 404 /index.php;
-
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.4-fpm.sock;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-
-    location ~ /\.(?!well-known).* {
-        deny all;
-    }
-}
-```
-
-Ative o site e reinicie:
-```bash
-ln -s /etc/nginx/sites-available/printerdocs /etc/nginx/sites-enabled/
-nginx -t
-systemctl restart nginx
-```
-
-**Gere o Certificado SSL grátis (Cadeado Verde / HTTPS):**
-```bash
-apt install certbot python3-certbot-nginx -y
-certbot --nginx -d seusite.com.br
-```
-
-### 2.5 Configurando o Supervisor (Jobs em Background)
-
-O `Supervisor` mantém as filas do Laravel (como a IA extraindo PDFs gigantes) rodando sem parar.
-
-Crie o arquivo do worker:
-```bash
-nano /etc/supervisor/conf.d/printerdocs-worker.conf
-```
-*Cole o conteúdo:*
-```ini
-[program:printerdocs-worker]
-process_name=%(program_name)s_%(process_num)02d
-command=php /var/www/printerdocs/artisan queue:work database --sleep=3 --tries=3 --max-time=3600
-autostart=true
-autorestart=true
-stopasgroup=true
-killasgroup=true
-user=www-data
-numprocs=2
-redirect_stderr=true
-stdout_logfile=/var/www/printerdocs/storage/logs/worker.log
-```
-
-Atualize o Supervisor para aplicar a nova regra:
-```bash
-supervisorctl reread
-supervisorctl update
-supervisorctl start printerdocs-worker:*
-```
-
-**Por fim, aplique um cache final de produção:**
-```bash
-cd /var/www/printerdocs
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-Pronto! Seu sistema está 100% otimizado, seguro e rodando na internet.
+> 💡 **Dica Pro (Virtual Host):** 
+> Para acessar o sistema por uma URL limpa (ex: `http://printerdocs.local`), sem precisar digitar a subpasta `/public`, abra o arquivo `C:\xampp\apache\conf\extra\httpd-vhosts.conf` e crie um bloco apontando o `DocumentRoot` direto para a pasta `public` do projeto, adicionando também a rota fictícia no arquivo `hosts` do Windows (`C:\Windows\System32\drivers\etc\hosts`).
 
 ---
 

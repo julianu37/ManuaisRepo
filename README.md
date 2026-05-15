@@ -84,9 +84,10 @@ Acesse o sistema no navegador: `http://localhost:8000`.
 
 ---
 
-## ☁️ Deploy em Produção
+## ☁️ Deploy em Produção (Windows / XAMPP)
 
-Para ambientes em nuvem (AWS, DigitalOcean, Hostinger):
-* Recomenda-se rodar o Laravel usando Nginx/Apache.
-* Rode `npm run build` para empacotar o frontend React.
-* Troque `QUEUE_CONNECTION` no `.env` para `database` ou `redis` e instale o software **Supervisor** no Linux para manter a fila de processamento de PDFs (`php artisan queue:work`) operando de forma assíncrona 24/7.
+Para servir o projeto em produção no ambiente Windows usando XAMPP:
+* Mova o projeto para dentro da pasta pública `C:\xampp\htdocs\`.
+* Rode `npm run build` na pasta do projeto para empacotar a interface React otimizada.
+* Configure no `.env`: `APP_ENV=production`, `APP_DEBUG=false`, e `QUEUE_CONNECTION=sync` (para que a IA rode sem precisar do Supervisor do Linux).
+* Inicie os módulos do **Apache** e **MySQL** no Painel de Controle do XAMPP e acesse via `localhost`.
