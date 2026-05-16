@@ -24,6 +24,7 @@ echo -e "${BLUE}==============================================================${
 # 1. Configurar Variáveis Iniciais
 echo -e "${YELLOW}Antes de começarmos, precisamos de algumas informações:${NC}"
 read -p "🔑 Digite a senha desejada para o banco de dados MySQL [printer_user]: " DB_PASS
+read -p "📧 Digite seu e-mail (necessário para o certificado SSL grátis): " SSL_EMAIL
 read -p "⚙️  Deseja instalar e configurar o Supervisor (Filas em background para IA)? (s/n): " INSTALL_SUPERVISOR
 
 # 2. Limpar Iptables da Oracle
@@ -91,9 +92,12 @@ cp .env.example .env
 sed -i 's/APP_ENV=local/APP_ENV=production/' .env
 sed -i 's/APP_DEBUG=true/APP_DEBUG=false/' .env
 sed -i 's|APP_URL=http://localhost|APP_URL=https://paineldev.com.br|' .env
-sed -i 's/DB_DATABASE=laravel/DB_DATABASE=printerdocs/' .env
-sed -i 's/DB_USERNAME=root/DB_USERNAME=printer_user/' .env
-sed -i "s/DB_PASSWORD=/DB_PASSWORD=${DB_PASS}/" .env
+sed -i 's/DB_CONNECTION=sqlite/DB_CONNECTION=mysql/' .env
+sed -i 's/# DB_HOST=127.0.0.1/DB_HOST=127.0.0.1/' .env
+sed -i 's/# DB_PORT=3306/DB_PORT=3306/' .env
+sed -i 's/# DB_DATABASE=laravel/DB_DATABASE=printerdocs/' .env
+sed -i 's/# DB_USERNAME=root/DB_USERNAME=printer_user/' .env
+sed -i "s/# DB_PASSWORD=/DB_PASSWORD=${DB_PASS}/" .env
 
 if [[ "$INSTALL_SUPERVISOR" == "s" || "$INSTALL_SUPERVISOR" == "S" ]]; then
     sed -i 's/QUEUE_CONNECTION=sync/QUEUE_CONNECTION=database/' .env
@@ -176,10 +180,10 @@ EOF
 fi
 
 # 13. SSL Certbot
-echo -e "\n${YELLOW}>> Inciando instalação do SSL (Cadeado Verde HTTPS)...${NC}"
+echo -e "\n${YELLOW}>> Iniciando instalação do SSL (Cadeado Verde HTTPS)...${NC}"
 echo -e "${RED}⚠️  ATENÇÃO: O domínio paineldev.com.br precisa estar apontando para o IP desta VPS!${NC}"
 apt install certbot python3-certbot-nginx -y
-certbot --nginx -d paineldev.com.br -d www.paineldev.com.br
+certbot --nginx --non-interactive --agree-tos -m "$SSL_EMAIL" -d paineldev.com.br -d www.paineldev.com.br
 
 # Cache final
 echo -e "${YELLOW}>> Otimizando Laravel...${NC}"
