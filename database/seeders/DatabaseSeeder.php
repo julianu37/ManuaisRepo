@@ -19,11 +19,13 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
         ]);
 
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-            'is_admin' => true,
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin User',
+                'password' => bcrypt('password'),
+                'is_admin' => true,
+            ]
+        );
     }
 }
