@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import React from 'react';
 import { LayoutDashboard, Tags, Printer, Book, LogOut, Settings } from 'lucide-react';
 
@@ -57,14 +57,7 @@ export default function AdminLayout({ children, title, breadcrumbs }: Props) {
 
                 <div className="p-6 border-t" style={{ borderColor: 'rgba(255,255,255,0.05)', backgroundColor: '#04120e' }}>
                     <button 
-                        onClick={() => {
-                            if (typeof route !== 'undefined') {
-                                // @ts-ignore
-                                window.location.href = route('logout');
-                            } else {
-                                window.location.href = '/logout';
-                            }
-                        }}
+                        onClick={() => router.post('/logout')}
                         className="flex items-center gap-3 w-full px-4 py-3 font-semibold rounded hover:bg-white/5 transition-colors"
                         style={{ color: '#ef4444' }}
                     >
