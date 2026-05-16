@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::inertia('/', 'welcome', [
-    'canRegister' => Features::enabled(Features::registration()),
-])->name('home');
+Route::get('/', function () {
+    return inertia('welcome', [
+        'canRegister' => Features::enabled(Features::registration()),
+        'models' => \App\Models\PrinterModel::with('brand:id,name')->get(['id', 'name', 'brand_id']),
+    ]);
+})->name('home');
 
 // Busca Pública
 Route::get('/buscar', [\App\Http\Controllers\SearchController::class, 'search'])->name('search');

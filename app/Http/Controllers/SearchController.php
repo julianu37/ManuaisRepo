@@ -15,24 +15,39 @@ class SearchController extends Controller
             return redirect()->route('home');
         }
 
-        $errorResults = ErrorCode::query()
-            ->with(['manual.printerModel.brand'])
-            ->where('code', 'LIKE', "%{$query}%")
-            ->latest()
-            ->paginate(15, ['*'], 'errors_page');
+        $modelId = $request->input('model_id');
 
-        $manualResults = \App\Models\Manual::query()
+        $errorResultsQuery = ErrorCode::query()
+            ->with(['manual.printerModel.brand'])
+            ->where('code', 'LIKE', "%{$query}%");
+
+        if ($modelId) {
+            $errorResultsQuery->whereHas('manual.printerModel', function ($q) use ($modelId) {
+                $q->where('id', $modelId);
+            });
+        }
+
+        $errorResults = $errorResultsQuery->latest()->paginate(15, ['*'], 'errors_page')->withQueryString();
+
+        $manualResultsQuery = \App\Models\Manual::query()
             ->with(['printerModel.brand'])
-            ->where('title', 'LIKE', "%{$query}%")
-            ->orWhereHas('printerModel', function ($q) use ($query) {
-                $q->where('name', 'LIKE', "%{$query}%")
-                  ->orWhereHas('brand', function ($b) use ($query) {
-                      $b->where('name', 'LIKE', "%{$query}%");
+            ->where('status', 'indexed');
+
+        if ($modelId) {
+            $manualResultsQuery->where('printer_model_id', $modelId);
+        } else {
+            $manualResultsQuery->where(function ($q) use ($query) {
+                $q->where('title', 'LIKE', "%{$query}%")
+                  ->orWhereHas('printerModel', function ($sq) use ($query) {
+                      $sq->where('name', 'LIKE', "%{$query}%")
+                        ->orWhereHas('brand', function ($b) use ($query) {
+                            $b->where('name', 'LIKE', "%{$query}%");
+                        });
                   });
-            })
-            ->where('status', 'indexed') // Apenas manuais processados
-            ->latest()
-            ->paginate(15, ['*'], 'manuals_page');
+            });
+        }
+
+        $manualResults = $manualResultsQuery->latest()->paginate(15, ['*'], 'manuals_page')->withQueryString();
 
         return inertia('search/results', [
             'errorResults' => $errorResults,
