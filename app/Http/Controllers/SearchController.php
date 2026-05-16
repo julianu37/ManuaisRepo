@@ -49,10 +49,17 @@ class SearchController extends Controller
 
         $manualResults = $manualResultsQuery->latest()->paginate(15, ['*'], 'manuals_page')->withQueryString();
 
+        $selectedModel = null;
+        if ($modelId) {
+            $selectedModel = \App\Models\PrinterModel::with('brand')->find($modelId);
+        }
+
         return inertia('search/results', [
             'errorResults' => $errorResults,
             'manualResults' => $manualResults,
-            'searchTerm' => $query
+            'searchTerm' => $query,
+            'modelId' => $modelId,
+            'selectedModel' => $selectedModel
         ]);
     }
 }

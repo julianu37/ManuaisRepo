@@ -15,15 +15,25 @@ interface Props {
         total: number;
     };
     searchTerm: string;
+    modelId?: number | null;
+    selectedModel?: {
+        id: number;
+        name: string;
+        brand: { name: string };
+    } | null;
 }
 
-export default function SearchResults({ errorResults, manualResults, searchTerm }: Props) {
+export default function SearchResults({ errorResults, manualResults, searchTerm, modelId, selectedModel }: Props) {
     const [query, setQuery] = useState(searchTerm);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         if (query.trim()) {
-            router.get('/buscar', { q: query });
+            const params: any = { q: query };
+            if (modelId) {
+                params.model_id = modelId;
+            }
+            router.get('/buscar', params);
         }
     };
 
@@ -41,23 +51,33 @@ export default function SearchResults({ errorResults, manualResults, searchTerm 
                         <span className="text-xl font-bold tracking-tight hidden sm:inline">Printer<span style={{ color: '#00a36c' }}>Docs</span></span>
                     </Link>
 
-                    <form onSubmit={handleSearch} className="flex-1 relative w-full">
-                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center" style={{ color: '#00a36c' }}>
+                    <form onSubmit={handleSearch} className="flex-1 relative w-full flex items-center">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none" style={{ color: '#00a36c' }}>
                             <Search size={20} />
                         </div>
-                        <input 
-                            type="text"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            className="w-full border-none py-3 pl-12 pr-4 focus:ring-0 outline-none transition-all text-lg"
-                            style={{ 
-                                backgroundColor: 'rgba(255,255,255,0.05)', 
-                                color: '#ffffff', 
-                                borderRadius: '4px',
-                                borderBottom: '2px solid #00a36c'
-                            }}
-                            placeholder="Buscar modelo ou código de erro..."
-                        />
+                        
+                        <div className="w-full flex items-center border-b-2 py-1 pl-12 pr-4 transition-all focus-within:border-white" 
+                             style={{ backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '4px', borderColor: '#00a36c' }}>
+                            
+                            {selectedModel && (
+                                <Link href="/" className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm mr-2 transition-colors hover:bg-white/10" 
+                                      style={{ backgroundColor: 'rgba(0, 163, 108, 0.15)', border: '1px solid rgba(0, 163, 108, 0.3)', color: '#00a36c' }}
+                                      title="Clique para trocar de modelo">
+                                    <span className="font-bold text-xs whitespace-nowrap">
+                                        {selectedModel.brand.name} {selectedModel.name}
+                                    </span>
+                                </Link>
+                            )}
+                            
+                            <input 
+                                type="text"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                className="flex-1 border-none py-2 px-0 focus:ring-0 outline-none text-lg bg-transparent"
+                                style={{ color: '#ffffff' }}
+                                placeholder={selectedModel ? "Digite outro código de erro..." : "Buscar modelo ou código..."}
+                            />
+                        </div>
                     </form>
                     
                     <Link href="/dashboard" className="hidden md:flex font-bold px-6 py-2 rounded transition-colors border hover:bg-white/5 whitespace-nowrap" style={{ borderColor: '#00a36c', color: '#00a36c' }}>
