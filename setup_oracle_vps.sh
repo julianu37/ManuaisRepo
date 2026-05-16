@@ -154,6 +154,7 @@ server {
     add_header X-Content-Type-Options "nosniff";
     index index.php;
     charset utf-8;
+    client_max_body_size 1G;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
