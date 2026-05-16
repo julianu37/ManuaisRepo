@@ -38,6 +38,19 @@ apt update && apt upgrade -y
 apt install software-properties-common curl git unzip nano -y
 ```
 
+### 1.3. Criando Memória Swap (Anti-Travamentos)
+Servidores cloud gratuitos da Oracle geralmente vêm com apenas 1GB de RAM. Rodar o Laravel, React (NPM) e inteligência artificial (PyMuPDF) pode esgotar a RAM instantaneamente. Vamos criar **2GB de arquivo de Swap** (uma "RAM virtual" no SSD) para o servidor nunca cair:
+
+```bash
+fallocate -l 2G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+sysctl vm.swappiness=10
+echo 'vm.swappiness=10' >> /etc/sysctl.conf
+```
+
 ---
 
 ## ⚙️ Passo 2: Instalação do PHP 8.4, Nginx e MySQL

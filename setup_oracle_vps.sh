@@ -44,38 +44,53 @@ apt install iptables-persistent -y
 netfilter-persistent save > /dev/null 2>&1
 netfilter-persistent reload > /dev/null 2>&1
 
-# 3. Atualizar Pacotes e Dependências
+# 3. Criar Memória Swap (2GB) para prevenir Out Of Memory (OOM) em VPS de 1GB
+echo -e "\n${YELLOW}>> Configurando Memória Swap (2GB)...${NC}"
+if [ -f /swapfile ]; then
+    echo -e "${RED}Swap já existe. Pulando etapa.${NC}"
+else
+    fallocate -l 2G /swapfile
+    chmod 600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
+    echo '/swapfile none swap sw 0 0' >> /etc/fstab
+    sysctl vm.swappiness=10
+    echo 'vm.swappiness=10' >> /etc/sysctl.conf
+    echo -e "${GREEN}Swap de 2GB criado com sucesso!${NC}"
+fi
+
+# 4. Atualizar Pacotes e Dependências
 echo -e "${YELLOW}>> Atualizando o sistema e instalando dependências base...${NC}"
 apt upgrade -y
 apt install software-properties-common curl git unzip nano -y
 
-# 4. Instalar PHP 8.4, Nginx e MySQL
+# 5. Instalar PHP 8.4, Nginx e MySQL
 echo -e "${YELLOW}>> Instalando Nginx, MySQL e PHP 8.4...${NC}"
 apt install nginx mysql-server -y
 add-apt-repository ppa:ondrej/php -y
 apt update
 apt install php8.4 php8.4-fpm php8.4-mysql php8.4-mbstring php8.4-xml php8.4-curl php8.4-zip php8.4-sqlite3 php8.4-bcmath php8.4-intl -y
 
-# 5. Instalar Node.js e Composer
+# 6. Instalar Node.js e Composer
 echo -e "${YELLOW}>> Instalando Node.js (v20) e Composer...${NC}"
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y nodejs
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
-# 6. Instalar Python 3 e PyMuPDF
+# 7. Instalar Python 3 e PyMuPDF
 echo -e "${YELLOW}>> Instalando Python e PyMuPDF...${NC}"
 apt install python3 python3-pip -y
 pip install PyMuPDF --break-system-packages
 
-# 7. Configurar Banco de Dados
+# 8. Configurar Banco de Dados
 echo -e "${YELLOW}>> Configurando Banco de Dados MySQL...${NC}"
 mysql -u root -e "CREATE DATABASE IF NOT EXISTS printerdocs;"
 mysql -u root -e "CREATE USER IF NOT EXISTS 'printer_user'@'localhost' IDENTIFIED BY '${DB_PASS}';"
 mysql -u root -e "GRANT ALL PRIVILEGES ON printerdocs.* TO 'printer_user'@'localhost';"
 mysql -u root -e "FLUSH PRIVILEGES;"
 
-# 8. Clonar Repositório
+# 9. Clonar Repositório
 echo -e "${YELLOW}>> Clonando repositório do Github...${NC}"
 cd /var/www
 if [ -d "paineldev" ]; then
@@ -86,7 +101,7 @@ fi
 
 cd /var/www/paineldev
 
-# 9. Configurar .env
+# 10. Configurar .env
 echo -e "${YELLOW}>> Configurando arquivo .env...${NC}"
 cp .env.example .env
 sed -i 's/APP_ENV=local/APP_ENV=production/' .env
@@ -105,7 +120,7 @@ else
     sed -i 's/QUEUE_CONNECTION=database/QUEUE_CONNECTION=sync/' .env
 fi
 
-# 10. Build do Laravel e Permissões
+# 11. Build do Laravel e Permissões
 echo -e "${YELLOW}>> Instalando pacotes e fazendo build (Isso pode demorar alguns minutos)...${NC}"
 composer install --optimize-autoloader --no-dev
 php artisan key:generate --force
@@ -122,7 +137,7 @@ find /var/www/paineldev -type d -exec chmod 775 {} \;
 chmod -R 775 /var/www/paineldev/storage
 chmod -R 775 /var/www/paineldev/bootstrap/cache
 
-# 11. Configurar Nginx
+# 12. Configurar Nginx
 echo -e "${YELLOW}>> Configurando Nginx para paineldev.com.br...${NC}"
 cat > /etc/nginx/sites-available/paineldev << 'EOF'
 server {
@@ -157,7 +172,7 @@ ln -sf /etc/nginx/sites-available/paineldev /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 systemctl restart nginx
 
-# 12. Supervisor (Opcional)
+# 13. Supervisor (Opcional)
 if [[ "$INSTALL_SUPERVISOR" == "s" || "$INSTALL_SUPERVISOR" == "S" ]]; then
     echo -e "${YELLOW}>> Configurando Supervisor para processamento em background...${NC}"
     apt install supervisor -y
@@ -179,7 +194,7 @@ EOF
     supervisorctl start paineldev-worker:*
 fi
 
-# 13. SSL Certbot
+# 14. SSL Certbot
 echo -e "\n${YELLOW}>> Iniciando instalação do SSL (Cadeado Verde HTTPS)...${NC}"
 echo -e "${RED}⚠️  ATENÇÃO: O domínio paineldev.com.br precisa estar apontando para o IP desta VPS!${NC}"
 apt install certbot python3-certbot-nginx -y
