@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/ManualViewController.php:10
  * @route '/manual/{manual}/pagina/{page}'
  */
-export const view = (args: { manual: string | number | { id: string | number }, page: string | number } | [manual: string | number | { id: string | number }, page: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const view = (args: { manual: number | { id: number }, page: string | number } | [manual: number | { id: number }, page: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: view.url(args, options),
     method: 'get',
 })
@@ -19,7 +19,7 @@ view.definition = {
  * @see app/Http/Controllers/ManualViewController.php:10
  * @route '/manual/{manual}/pagina/{page}'
  */
-view.url = (args: { manual: string | number | { id: string | number }, page: string | number } | [manual: string | number | { id: string | number }, page: string | number ], options?: RouteQueryOptions) => {
+view.url = (args: { manual: number | { id: number }, page: string | number } | [manual: number | { id: number }, page: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     manual: args[0],
@@ -47,7 +47,7 @@ view.url = (args: { manual: string | number | { id: string | number }, page: str
  * @see app/Http/Controllers/ManualViewController.php:10
  * @route '/manual/{manual}/pagina/{page}'
  */
-view.get = (args: { manual: string | number | { id: string | number }, page: string | number } | [manual: string | number | { id: string | number }, page: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+view.get = (args: { manual: number | { id: number }, page: string | number } | [manual: number | { id: number }, page: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: view.url(args, options),
     method: 'get',
 })
@@ -56,7 +56,7 @@ view.get = (args: { manual: string | number | { id: string | number }, page: str
  * @see app/Http/Controllers/ManualViewController.php:10
  * @route '/manual/{manual}/pagina/{page}'
  */
-view.head = (args: { manual: string | number | { id: string | number }, page: string | number } | [manual: string | number | { id: string | number }, page: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+view.head = (args: { manual: number | { id: number }, page: string | number } | [manual: number | { id: number }, page: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: view.url(args, options),
     method: 'head',
 })
@@ -66,7 +66,7 @@ view.head = (args: { manual: string | number | { id: string | number }, page: st
  * @see app/Http/Controllers/ManualViewController.php:10
  * @route '/manual/{manual}/pagina/{page}'
  */
-    const viewForm = (args: { manual: string | number | { id: string | number }, page: string | number } | [manual: string | number | { id: string | number }, page: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const viewForm = (args: { manual: number | { id: number }, page: string | number } | [manual: number | { id: number }, page: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: view.url(args, options),
         method: 'get',
     })
@@ -76,7 +76,7 @@ view.head = (args: { manual: string | number | { id: string | number }, page: st
  * @see app/Http/Controllers/ManualViewController.php:10
  * @route '/manual/{manual}/pagina/{page}'
  */
-        viewForm.get = (args: { manual: string | number | { id: string | number }, page: string | number } | [manual: string | number | { id: string | number }, page: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        viewForm.get = (args: { manual: number | { id: number }, page: string | number } | [manual: number | { id: number }, page: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: view.url(args, options),
             method: 'get',
         })
@@ -85,7 +85,7 @@ view.head = (args: { manual: string | number | { id: string | number }, page: st
  * @see app/Http/Controllers/ManualViewController.php:10
  * @route '/manual/{manual}/pagina/{page}'
  */
-        viewForm.head = (args: { manual: string | number | { id: string | number }, page: string | number } | [manual: string | number | { id: string | number }, page: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        viewForm.head = (args: { manual: number | { id: number }, page: string | number } | [manual: number | { id: number }, page: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: view.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -101,7 +101,7 @@ view.head = (args: { manual: string | number | { id: string | number }, page: st
  * @see app/Http/Controllers/ManualViewController.php:19
  * @route '/manual/{manual}/stream'
  */
-export const stream = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const stream = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: stream.url(args, options),
     method: 'get',
 })
@@ -116,7 +116,7 @@ stream.definition = {
  * @see app/Http/Controllers/ManualViewController.php:19
  * @route '/manual/{manual}/stream'
  */
-stream.url = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+stream.url = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { manual: args }
     }
@@ -149,7 +149,7 @@ stream.url = (args: { manual: string | number | { id: string | number } } | [man
  * @see app/Http/Controllers/ManualViewController.php:19
  * @route '/manual/{manual}/stream'
  */
-stream.get = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+stream.get = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: stream.url(args, options),
     method: 'get',
 })
@@ -158,7 +158,7 @@ stream.get = (args: { manual: string | number | { id: string | number } } | [man
  * @see app/Http/Controllers/ManualViewController.php:19
  * @route '/manual/{manual}/stream'
  */
-stream.head = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+stream.head = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: stream.url(args, options),
     method: 'head',
 })
@@ -168,7 +168,7 @@ stream.head = (args: { manual: string | number | { id: string | number } } | [ma
  * @see app/Http/Controllers/ManualViewController.php:19
  * @route '/manual/{manual}/stream'
  */
-    const streamForm = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const streamForm = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: stream.url(args, options),
         method: 'get',
     })
@@ -178,7 +178,7 @@ stream.head = (args: { manual: string | number | { id: string | number } } | [ma
  * @see app/Http/Controllers/ManualViewController.php:19
  * @route '/manual/{manual}/stream'
  */
-        streamForm.get = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        streamForm.get = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: stream.url(args, options),
             method: 'get',
         })
@@ -187,7 +187,7 @@ stream.head = (args: { manual: string | number | { id: string | number } } | [ma
  * @see app/Http/Controllers/ManualViewController.php:19
  * @route '/manual/{manual}/stream'
  */
-        streamForm.head = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        streamForm.head = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: stream.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',

@@ -215,7 +215,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Admin/PrinterModelController.php:41
  * @route '/dashboard/modelos/{printerModel}'
  */
-export const show = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -230,7 +230,7 @@ show.definition = {
  * @see app/Http/Controllers/Admin/PrinterModelController.php:41
  * @route '/dashboard/modelos/{printerModel}'
  */
-show.url = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+show.url = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { printerModel: args }
     }
@@ -263,7 +263,7 @@ show.url = (args: { printerModel: string | number | { id: string | number } } | 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:41
  * @route '/dashboard/modelos/{printerModel}'
  */
-show.get = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -272,7 +272,7 @@ show.get = (args: { printerModel: string | number | { id: string | number } } | 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:41
  * @route '/dashboard/modelos/{printerModel}'
  */
-show.head = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -282,7 +282,7 @@ show.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:41
  * @route '/dashboard/modelos/{printerModel}'
  */
-    const showForm = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const showForm = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show.url(args, options),
         method: 'get',
     })
@@ -292,7 +292,7 @@ show.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:41
  * @route '/dashboard/modelos/{printerModel}'
  */
-        showForm.get = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.get = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, options),
             method: 'get',
         })
@@ -301,7 +301,7 @@ show.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:41
  * @route '/dashboard/modelos/{printerModel}'
  */
-        showForm.head = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        showForm.head = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -317,7 +317,7 @@ show.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:42
  * @route '/dashboard/modelos/{printerModel}/edit'
  */
-export const edit = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -332,7 +332,7 @@ edit.definition = {
  * @see app/Http/Controllers/Admin/PrinterModelController.php:42
  * @route '/dashboard/modelos/{printerModel}/edit'
  */
-edit.url = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+edit.url = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { printerModel: args }
     }
@@ -365,7 +365,7 @@ edit.url = (args: { printerModel: string | number | { id: string | number } } | 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:42
  * @route '/dashboard/modelos/{printerModel}/edit'
  */
-edit.get = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -374,7 +374,7 @@ edit.get = (args: { printerModel: string | number | { id: string | number } } | 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:42
  * @route '/dashboard/modelos/{printerModel}/edit'
  */
-edit.head = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -384,7 +384,7 @@ edit.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:42
  * @route '/dashboard/modelos/{printerModel}/edit'
  */
-    const editForm = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    const editForm = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: edit.url(args, options),
         method: 'get',
     })
@@ -394,7 +394,7 @@ edit.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:42
  * @route '/dashboard/modelos/{printerModel}/edit'
  */
-        editForm.get = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        editForm.get = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url(args, options),
             method: 'get',
         })
@@ -403,7 +403,7 @@ edit.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:42
  * @route '/dashboard/modelos/{printerModel}/edit'
  */
-        editForm.head = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        editForm.head = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
@@ -419,7 +419,7 @@ edit.head = (args: { printerModel: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Admin/PrinterModelController.php:43
  * @route '/dashboard/modelos/{printerModel}'
  */
-export const update = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -434,7 +434,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/PrinterModelController.php:43
  * @route '/dashboard/modelos/{printerModel}'
  */
-update.url = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { printerModel: args }
     }
@@ -467,7 +467,7 @@ update.url = (args: { printerModel: string | number | { id: string | number } } 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:43
  * @route '/dashboard/modelos/{printerModel}'
  */
-update.put = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -476,7 +476,7 @@ update.put = (args: { printerModel: string | number | { id: string | number } } 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:43
  * @route '/dashboard/modelos/{printerModel}'
  */
-update.patch = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -486,7 +486,7 @@ update.patch = (args: { printerModel: string | number | { id: string | number } 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:43
  * @route '/dashboard/modelos/{printerModel}'
  */
-    const updateForm = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -501,7 +501,7 @@ update.patch = (args: { printerModel: string | number | { id: string | number } 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:43
  * @route '/dashboard/modelos/{printerModel}'
  */
-        updateForm.put = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -515,7 +515,7 @@ update.patch = (args: { printerModel: string | number | { id: string | number } 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:43
  * @route '/dashboard/modelos/{printerModel}'
  */
-        updateForm.patch = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -531,7 +531,7 @@ update.patch = (args: { printerModel: string | number | { id: string | number } 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:44
  * @route '/dashboard/modelos/{printerModel}'
  */
-export const destroy = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -546,7 +546,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/PrinterModelController.php:44
  * @route '/dashboard/modelos/{printerModel}'
  */
-destroy.url = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { printerModel: args }
     }
@@ -579,7 +579,7 @@ destroy.url = (args: { printerModel: string | number | { id: string | number } }
  * @see app/Http/Controllers/Admin/PrinterModelController.php:44
  * @route '/dashboard/modelos/{printerModel}'
  */
-destroy.delete = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -589,7 +589,7 @@ destroy.delete = (args: { printerModel: string | number | { id: string | number 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:44
  * @route '/dashboard/modelos/{printerModel}'
  */
-    const destroyForm = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -604,7 +604,7 @@ destroy.delete = (args: { printerModel: string | number | { id: string | number 
  * @see app/Http/Controllers/Admin/PrinterModelController.php:44
  * @route '/dashboard/modelos/{printerModel}'
  */
-        destroyForm.delete = (args: { printerModel: string | number | { id: string | number } } | [printerModel: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { printerModel: number | { id: number } } | [printerModel: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
