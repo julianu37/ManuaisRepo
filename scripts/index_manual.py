@@ -3,6 +3,7 @@ import json
 import re
 import sys
 import argparse
+import base64
 
 def extract_error_codes(pdf_path, patterns_json):
     try:
@@ -52,8 +53,9 @@ def extract_error_codes(pdf_path, patterns_json):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--pdf", required=True)
-    parser.add_argument("--patterns", required=True)
+    parser.add_argument("--patterns-b64", required=True)
     args = parser.parse_args()
 
-    output = extract_error_codes(args.pdf, args.patterns)
+    patterns_json = base64.b64decode(args.patterns_b64).decode('utf-8')
+    output = extract_error_codes(args.pdf, patterns_json)
     print(json.dumps(output))

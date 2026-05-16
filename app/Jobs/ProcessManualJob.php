@@ -32,7 +32,7 @@ class ProcessManualJob implements ShouldQueue
             $pythonCmd,
             base_path('scripts/index_manual.py'),
             '--pdf', storage_path('app/private/' . $this->manual->file_path),
-            '--patterns', json_encode($patterns),
+            '--patterns-b64', base64_encode(json_encode($patterns)),
         ], null, $env);
 
         $process->setTimeout($this->timeout);
