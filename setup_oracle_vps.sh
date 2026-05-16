@@ -132,6 +132,7 @@ php artisan migrate --force
 php artisan storage:link
 
 npm install
+php artisan wayfinder:generate
 npm run build
 
 echo -e "${YELLOW}>> Ajustando permissões...${NC}"
