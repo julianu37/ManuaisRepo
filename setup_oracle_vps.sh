@@ -27,6 +27,9 @@ read -p "🔑 Digite a senha desejada para o banco de dados MySQL [printer_user]
 read -p "📧 Digite seu e-mail (necessário para o certificado SSL grátis): " SSL_EMAIL
 read -p "⚙️  Deseja instalar e configurar o Supervisor (Filas em background para IA)? (s/n): " INSTALL_SUPERVISOR
 
+# Impede que o Linux abra telas interativas rosas de configuração no meio da instalação
+export DEBIAN_FRONTEND=noninteractive
+
 # 2. Limpar Iptables da Oracle
 echo -e "\n${YELLOW}>> Desativando iptables (Oracle Default)...${NC}"
 iptables -F
@@ -77,6 +80,7 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y nodejs
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
+chmod +x /usr/local/bin/composer
 
 # 7. Instalar Python 3 e PyMuPDF
 echo -e "${YELLOW}>> Instalando Python e PyMuPDF...${NC}"
