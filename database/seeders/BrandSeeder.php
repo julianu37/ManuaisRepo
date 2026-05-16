@@ -17,7 +17,7 @@ class BrandSeeder extends Seeder
                 'name' => 'Ricoh',
                 'slug' => 'ricoh',
                 'error_patterns' => [
-                    'primary' => '\b(SC[\s\-]?\d{3,4})\b',
+                    'primary' => '(?:^|\n)\s*(SC[\s\-]?\d{3,4}(?:-\d{2,3})?)(?=\s*(?:\n|:|\s+[A-D]\b))',
                 ],
             ],
             [
