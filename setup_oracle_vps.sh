@@ -129,6 +129,7 @@ echo -e "${YELLOW}>> Instalando pacotes e fazendo build (Isso pode demorar algun
 composer install --optimize-autoloader --no-dev
 php artisan key:generate --force
 php artisan migrate --force
+php artisan db:seed --force
 php artisan storage:link
 
 npm install
