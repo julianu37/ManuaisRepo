@@ -7,7 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
-import { store } from '@/routes/register';
+
+// Wayfinder does not auto-generate the register route, so we define it inline
+const store = {
+    form: () => ({ action: '/register', method: 'post' as const }),
+};
 
 type Props = {
     passwordRules: string;
