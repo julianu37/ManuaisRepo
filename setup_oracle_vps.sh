@@ -74,6 +74,11 @@ add-apt-repository ppa:ondrej/php -y
 apt update
 apt install php8.4 php8.4-fpm php8.4-mysql php8.4-mbstring php8.4-xml php8.4-curl php8.4-zip php8.4-sqlite3 php8.4-bcmath php8.4-intl -y
 
+echo -e "${YELLOW}>> Configurando limites de upload no PHP...${NC}"
+sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' /etc/php/8.4/fpm/php.ini
+sed -i 's/post_max_size = .*/post_max_size = 1G/' /etc/php/8.4/fpm/php.ini
+systemctl restart php8.4-fpm
+
 # 6. Instalar Node.js e Composer
 echo -e "${YELLOW}>> Instalando Node.js (v20) e Composer...${NC}"
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
