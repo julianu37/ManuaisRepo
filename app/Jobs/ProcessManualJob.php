@@ -24,14 +24,16 @@ class ProcessManualJob implements ShouldQueue
 
         $patterns = $this->manual->printerModel->brand->error_patterns;
 
+        $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+        $pythonCmd = $isWindows ? 'C:\\Python314\\python.exe' : 'python3';
+        $env = $isWindows ? ['PYTHONPATH' => getenv('APPDATA') . '\\Python\\Python314\\site-packages'] : null;
+
         $process = new \Symfony\Component\Process\Process([
-            'C:\\Python314\\python.exe',
+            $pythonCmd,
             base_path('scripts/index_manual.py'),
             '--pdf', storage_path('app/private/' . $this->manual->file_path),
             '--patterns', json_encode($patterns),
-        ], null, [
-            'PYTHONPATH' => getenv('APPDATA') . '\\Python\\Python314\\site-packages'
-        ]);
+        ], null, $env);
 
         $process->setTimeout($this->timeout);
         $process->run();
