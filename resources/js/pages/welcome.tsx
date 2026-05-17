@@ -102,7 +102,7 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
                     </p>
 
                     <form onSubmit={handleSearch} className="w-full max-w-2xl mx-auto relative">
-                        <div className="flex items-center w-full h-20 shadow-2xl transition-all relative z-20"
+                        <div className="flex items-center w-full h-16 md:h-20 shadow-2xl transition-all relative z-20"
                              style={{ 
                                  backgroundColor: 'rgba(255,255,255,0.03)', 
                                  borderRadius: '8px', 
@@ -110,17 +110,17 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
                                  borderBottom: step === 1 ? '3px solid #3b82f6' : '3px solid #00a36c' 
                              }}>
                             
-                            <div className="pl-5 pr-2 flex items-center" style={{ color: step === 1 ? '#3b82f6' : '#00a36c' }}>
-                                <Search size={24} />
+                            <div className="pl-3 md:pl-5 pr-1 md:pr-2 flex items-center shrink-0" style={{ color: step === 1 ? '#3b82f6' : '#00a36c' }}>
+                                <Search className="w-5 h-5 md:w-6 md:h-6" />
                             </div>
 
                             {/* Tag do Modelo Selecionado (Passo 2) */}
                             {step === 2 && selectedModel && (
-                                <div className="flex items-center gap-2 px-3 py-1.5 rounded mr-2" style={{ backgroundColor: 'rgba(0, 163, 108, 0.15)', border: '1px solid rgba(0, 163, 108, 0.3)' }}>
-                                    <span className="font-bold text-sm" style={{ color: '#00a36c' }}>
+                                <div className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded mr-1 md:mr-2 shrink-0" style={{ backgroundColor: 'rgba(0, 163, 108, 0.15)', border: '1px solid rgba(0, 163, 108, 0.3)' }}>
+                                    <span className="font-bold text-xs md:text-sm truncate max-w-[100px] md:max-w-[200px]" style={{ color: '#00a36c' }}>
                                         {selectedModel.brand.name} {selectedModel.name}
                                     </span>
-                                    <button type="button" onClick={handleClearModel} className="hover:bg-white/10 rounded-full p-0.5 transition-colors" style={{ color: '#00a36c' }}>
+                                    <button type="button" onClick={handleClearModel} className="hover:bg-white/10 rounded-full p-0.5 transition-colors shrink-0" style={{ color: '#00a36c' }}>
                                         <X size={14} />
                                     </button>
                                 </div>
@@ -130,9 +130,9 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
                             <input 
                                 ref={inputRef}
                                 type="text" 
-                                className="flex-1 h-full bg-transparent border-0 focus:ring-0 focus:outline-none text-xl font-medium px-2" 
+                                className="flex-1 min-w-0 h-full bg-transparent border-0 focus:ring-0 focus:outline-none text-base md:text-xl font-medium px-1 md:px-2" 
                                 style={{ color: '#ffffff' }}
-                                placeholder={step === 1 ? "Qual o modelo da impressora? (ex: IM 430F)" : "Digite o código de erro..."}
+                                placeholder={step === 1 ? "Qual o modelo? (ex: IM 430)" : "Código de erro..."}
                                 value={step === 1 ? modelQuery : errorQuery}
                                 onChange={(e) => {
                                     if (step === 1) {
@@ -156,7 +156,7 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
                                         }
                                     }
                                 }}
-                                className={`h-14 px-6 font-bold flex items-center gap-2 mr-3 transition-all ${step === 2 && errorQuery.trim() ? 'hover:scale-105' : 'opacity-80'}`}
+                                className={`h-12 md:h-14 px-3 md:px-6 text-sm md:text-base font-bold flex items-center gap-1 md:gap-2 mr-2 md:mr-3 shrink-0 transition-all ${step === 2 && errorQuery.trim() ? 'hover:scale-105' : 'opacity-80'}`}
                                 style={{ 
                                     backgroundColor: step === 1 ? '#3b82f6' : '#00a36c', 
                                     color: '#ffffff', 
@@ -164,7 +164,7 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
                                     cursor: (step === 1 && !modelQuery.trim()) || (step === 2 && !errorQuery.trim()) ? 'not-allowed' : 'pointer'
                                 }}
                             >
-                                {step === 1 ? 'AVANÇAR' : 'BUSCAR'} <ChevronRight size={18} />
+                                <span className="hidden sm:inline">{step === 1 ? 'AVANÇAR' : 'BUSCAR'}</span> <ChevronRight size={18} />
                             </button>
                         </div>
 
