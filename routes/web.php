@@ -11,6 +11,7 @@ Route::get('/', function () {
 })->name('home');
 
 // Busca Pública
+Route::get('/modelo/{id}', [\App\Http\Controllers\PublicModelController::class, 'show'])->name('model.show');
 Route::get('/buscar', [\App\Http\Controllers\SearchController::class, 'search'])->name('search');
 Route::get('/manual/{manual}/pagina/{page}', [\App\Http\Controllers\ManualViewController::class, 'show'])->name('manual.view');
 Route::get('/manual/{manual}/stream', [\App\Http\Controllers\ManualViewController::class, 'stream'])->name('manual.stream');

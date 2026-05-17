@@ -13,10 +13,7 @@ type PrinterModel = {
 };
 
 export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
-    const [step, setStep] = useState<1 | 2>(1); // 1 = Model, 2 = Error Code
     const [modelQuery, setModelQuery] = useState('');
-    const [selectedModel, setSelectedModel] = useState<PrinterModel | null>(null);
-    const [errorQuery, setErrorQuery] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -40,36 +37,15 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
     }, []);
 
     const handleSelectModel = (model: PrinterModel) => {
-        setSelectedModel(model);
-        setModelQuery('');
-        setIsDropdownOpen(false);
-        setStep(2);
-        // Focus the input again after a short delay for smooth transition
-        setTimeout(() => inputRef.current?.focus(), 100);
-    };
-
-    const handleClearModel = () => {
-        setSelectedModel(null);
-        setErrorQuery('');
-        setStep(1);
-        setTimeout(() => inputRef.current?.focus(), 100);
+        router.get(`/modelo/${model.id}`);
     };
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         
-        // If we are in step 1 and pressing enter, and there's exactly 1 matching model, auto-select it
-        if (step === 1 && modelQuery.trim() && filteredModels.length > 0) {
+        // If pressing enter, and there's exactly 1 matching model (or at least 1), auto-select the first one
+        if (modelQuery.trim() && filteredModels.length > 0) {
             handleSelectModel(filteredModels[0]);
-            return;
-        }
-
-        // If we are in step 2 and have an error query, perform the search
-        if (step === 2 && errorQuery.trim() && selectedModel) {
-            router.get('/buscar', { 
-                q: errorQuery,
-                model_id: selectedModel.id
-            });
         }
     };
 
@@ -107,24 +83,12 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
                                  backgroundColor: 'rgba(255,255,255,0.03)', 
                                  borderRadius: '8px', 
                                  border: '1px solid rgba(255,255,255,0.1)',
-                                 borderBottom: step === 1 ? '3px solid #3b82f6' : '3px solid #00a36c' 
+                                 borderBottom: '3px solid #3b82f6' 
                              }}>
                             
-                            <div className="pl-3 md:pl-5 pr-1 md:pr-2 flex items-center shrink-0" style={{ color: step === 1 ? '#3b82f6' : '#00a36c' }}>
+                            <div className="pl-3 md:pl-5 pr-1 md:pr-2 flex items-center shrink-0" style={{ color: '#3b82f6' }}>
                                 <Search className="w-5 h-5 md:w-6 md:h-6" />
                             </div>
-
-                            {/* Tag do Modelo Selecionado (Passo 2) */}
-                            {step === 2 && selectedModel && (
-                                <div className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded mr-1 md:mr-2 shrink-0" style={{ backgroundColor: 'rgba(0, 163, 108, 0.15)', border: '1px solid rgba(0, 163, 108, 0.3)' }}>
-                                    <span className="font-bold text-xs md:text-sm truncate max-w-[100px] md:max-w-[200px]" style={{ color: '#00a36c' }}>
-                                        {selectedModel.brand.name} {selectedModel.name}
-                                    </span>
-                                    <button type="button" onClick={handleClearModel} className="hover:bg-white/10 rounded-full p-0.5 transition-colors shrink-0" style={{ color: '#00a36c' }}>
-                                        <X size={14} />
-                                    </button>
-                                </div>
-                            )}
 
                             {/* Input de Busca Dinâmico */}
                             <input 
@@ -132,44 +96,38 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
                                 type="text" 
                                 className="flex-1 min-w-0 h-full bg-transparent border-0 focus:ring-0 focus:outline-none text-base md:text-xl font-medium px-1 md:px-2" 
                                 style={{ color: '#ffffff' }}
-                                placeholder={step === 1 ? "Qual o modelo? (ex: IM 430)" : "Código de erro..."}
-                                value={step === 1 ? modelQuery : errorQuery}
+                                placeholder="Qual o modelo? (ex: IM 430)"
+                                value={modelQuery}
                                 onChange={(e) => {
-                                    if (step === 1) {
-                                        setModelQuery(e.target.value);
-                                        setIsDropdownOpen(true);
-                                    } else {
-                                        setErrorQuery(e.target.value);
-                                    }
+                                    setModelQuery(e.target.value);
+                                    setIsDropdownOpen(true);
                                 }}
-                                onFocus={() => step === 1 && setIsDropdownOpen(true)}
-                                onClick={() => step === 1 && setIsDropdownOpen(true)}
+                                onFocus={() => setIsDropdownOpen(true)}
+                                onClick={() => setIsDropdownOpen(true)}
                             />
 
                             <button 
-                                type={step === 2 ? "submit" : "button"}
+                                type="submit"
                                 onClick={(e) => {
-                                    if (step === 1) {
-                                        e.preventDefault();
-                                        if (filteredModels.length > 0 && modelQuery.trim()) {
-                                            handleSelectModel(filteredModels[0]);
-                                        }
+                                    e.preventDefault();
+                                    if (filteredModels.length > 0 && modelQuery.trim()) {
+                                        handleSelectModel(filteredModels[0]);
                                     }
                                 }}
-                                className={`h-12 md:h-14 px-3 md:px-6 text-sm md:text-base font-bold flex items-center gap-1 md:gap-2 mr-2 md:mr-3 shrink-0 transition-all ${step === 2 && errorQuery.trim() ? 'hover:scale-105' : 'opacity-80'}`}
+                                className={`h-12 md:h-14 px-3 md:px-6 text-sm md:text-base font-bold flex items-center gap-1 md:gap-2 mr-2 md:mr-3 shrink-0 transition-all ${modelQuery.trim() ? 'hover:scale-105' : 'opacity-80'}`}
                                 style={{ 
-                                    backgroundColor: step === 1 ? '#3b82f6' : '#00a36c', 
+                                    backgroundColor: '#3b82f6', 
                                     color: '#ffffff', 
                                     borderRadius: '4px',
-                                    cursor: (step === 1 && !modelQuery.trim()) || (step === 2 && !errorQuery.trim()) ? 'not-allowed' : 'pointer'
+                                    cursor: !modelQuery.trim() ? 'not-allowed' : 'pointer'
                                 }}
                             >
-                                <span className="hidden sm:inline">{step === 1 ? 'AVANÇAR' : 'BUSCAR'}</span> <ChevronRight size={18} />
+                                <span className="hidden sm:inline">AVANÇAR</span> <ChevronRight size={18} />
                             </button>
                         </div>
 
-                        {/* Dropdown de Modelos (Passo 1) */}
-                        {step === 1 && isDropdownOpen && modelQuery.trim().length > 0 && (
+                        {/* Dropdown de Modelos */}
+                        {isDropdownOpen && modelQuery.trim().length > 0 && (
                             <div ref={dropdownRef} className="absolute left-0 right-0 mt-2 rounded shadow-2xl overflow-hidden z-30" style={{ backgroundColor: '#0f2922', border: '1px solid rgba(255,255,255,0.1)' }}>
                                 {filteredModels.length > 0 ? (
                                     <ul className="max-h-64 overflow-y-auto">
