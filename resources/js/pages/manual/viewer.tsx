@@ -36,46 +36,46 @@ export default function ManualViewer({ manual, initialPage, pdfUrl }: Props) {
             <Head title={`Visualizando: ${manual.title}`} />
 
             {/* Top Toolbar */}
-            <header className="flex items-center justify-between px-6 py-3 bg-[#2d2d2d] border-b border-white/5 z-20 shadow-lg">
-                <div className="flex items-center gap-4">
+            <header className="flex items-center justify-between px-2 md:px-6 py-2 md:py-3 bg-[#2d2d2d] border-b border-white/5 z-20 shadow-lg">
+                <div className="flex items-center gap-2 md:gap-4 shrink-0">
                     <Link href="/">
-                        <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                            <X size={20} />
+                        <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 text-gray-400 hover:text-white shrink-0">
+                            <X size={18} className="md:w-5 md:h-5" />
                         </Button>
                     </Link>
-                    <div>
-                        <h1 className="font-bold text-sm leading-none">{manual.printer_model.brand.name} {manual.printer_model.name}</h1>
-                        <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">{manual.title}</p>
+                    <div className="hidden sm:block">
+                        <h1 className="font-bold text-xs md:text-sm leading-none truncate max-w-[140px] md:max-w-xs">{manual.printer_model.brand.name} {manual.printer_model.name}</h1>
+                        <p className="text-[9px] md:text-[10px] text-gray-400 mt-1 uppercase tracking-widest truncate max-w-[140px] md:max-w-xs">{manual.title}</p>
                     </div>
                 </div>
 
-                <div className="flex items-center bg-[#1a1a1a] rounded-lg px-2 py-1 gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => changePage(-1)} disabled={pageNumber <= 1} className="h-8 w-8 text-gray-400">
+                <div className="flex items-center bg-[#1a1a1a] rounded-md px-1 py-1 md:px-2 md:py-1.5 gap-0.5 md:gap-1 shrink-0 mx-2">
+                    <Button variant="ghost" size="icon" onClick={() => changePage(-1)} disabled={pageNumber <= 1} className="h-6 w-6 md:h-7 md:w-7 text-gray-400 shrink-0">
                         <ChevronLeft size={16} />
                     </Button>
-                    <div className="flex items-center gap-1 px-2 text-xs font-mono">
+                    <div className="flex items-center gap-1 px-1 md:px-2 text-[11px] md:text-xs font-mono shrink-0">
                         <input 
                             type="number" 
                             value={pageNumber} 
                             onChange={(e) => setPageNumber(Math.min(Math.max(parseInt(e.target.value) || 1, 1), numPages || 1))}
-                            className="bg-transparent border-none w-8 text-center p-0 focus:ring-0"
+                            className="bg-transparent border-none w-6 md:w-8 text-center p-0 focus:ring-0"
                         />
                         <span className="text-gray-600">/</span>
                         <span>{numPages || '--'}</span>
                     </div>
-                    <Button variant="ghost" size="icon" onClick={() => changePage(1)} disabled={pageNumber >= (numPages || 1)} className="h-8 w-8 text-gray-400">
+                    <Button variant="ghost" size="icon" onClick={() => changePage(1)} disabled={pageNumber >= (numPages || 1)} className="h-6 w-6 md:h-7 md:w-7 text-gray-400 shrink-0">
                         <ChevronRight size={16} />
                     </Button>
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <div className="flex items-center bg-[#1a1a1a] rounded-lg mr-2">
-                        <Button variant="ghost" size="icon" onClick={() => setScale(s => Math.max(s - 0.2, 0.5))} className="h-8 w-8 text-gray-400"><ZoomOut size={16} /></Button>
-                        <span className="text-[10px] text-gray-500 font-bold w-12 text-center">{Math.round(scale * 100)}%</span>
-                        <Button variant="ghost" size="icon" onClick={() => setScale(s => Math.min(s + 0.2, 3))} className="h-8 w-8 text-gray-400"><ZoomIn size={16} /></Button>
+                <div className="flex items-center gap-2 shrink-0">
+                    <div className="hidden md:flex items-center bg-[#1a1a1a] rounded-md mr-1 md:mr-2 shrink-0">
+                        <Button variant="ghost" size="icon" onClick={() => setScale(s => Math.max(s - 0.2, 0.5))} className="h-7 w-7 text-gray-400 shrink-0"><ZoomOut size={14} /></Button>
+                        <span className="text-[10px] text-gray-500 font-bold w-10 text-center shrink-0">{Math.round(scale * 100)}%</span>
+                        <Button variant="ghost" size="icon" onClick={() => setScale(s => Math.min(s + 0.2, 3))} className="h-7 w-7 text-gray-400 shrink-0"><ZoomIn size={14} /></Button>
                     </div>
-                    <a href={pdfUrl} download={manual.original_filename}>
-                        <Button variant="secondary" size="sm" className="text-white border-none h-8 px-4 gap-2 hover:brightness-110" style={{ backgroundColor: '#00875a' }}>
+                    <a href={pdfUrl} download={manual.original_filename} className="shrink-0">
+                        <Button variant="secondary" size="sm" className="text-white border-none h-8 px-3 md:px-4 gap-1.5 md:gap-2 hover:brightness-110" style={{ backgroundColor: '#00875a' }}>
                             <Download size={14} /> <span className="hidden sm:inline">Baixar PDF</span>
                         </Button>
                     </a>
