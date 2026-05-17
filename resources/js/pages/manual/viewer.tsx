@@ -83,10 +83,11 @@ export default function ManualViewer({ manual, initialPage, pdfUrl }: Props) {
             </header>
 
             {/* PDF Canvas Area */}
-            <main className="flex-1 overflow-auto flex justify-center bg-[#0f0f0f] p-8 custom-scrollbar">
-                <div className="shadow-2xl ring-1 ring-white/10">
-                    <Document 
-                        file={pdfUrl} 
+            <main className="flex-1 overflow-auto bg-[#0f0f0f] p-4 md:p-8 custom-scrollbar relative">
+                <div className="min-w-max min-h-max w-full flex justify-center items-start">
+                    <div className="shadow-2xl ring-1 ring-white/10 m-auto">
+                        <Document 
+                            file={pdfUrl} 
                         onLoadSuccess={onDocumentLoadSuccess}
                         loading={
                             <div className="flex flex-col items-center justify-center p-20 space-y-4">
@@ -109,6 +110,7 @@ export default function ManualViewer({ manual, initialPage, pdfUrl }: Props) {
                             className="rounded-sm"
                         />
                     </Document>
+                    </div>
                 </div>
             </main>
 
