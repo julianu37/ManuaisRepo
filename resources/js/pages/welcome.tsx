@@ -92,7 +92,7 @@ export default function Welcome({ models = [] }: { models: PrinterModel[] }) {
 
             {/* Hero Section */}
             <main className="flex-1 flex flex-col items-center justify-center relative px-6 py-20 text-center">
-                <div className="max-w-4xl mx-auto w-full z-10">
+                <div className="max-w-4xl mx-auto w-full z-50 relative">
                     <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight tracking-tight" style={{ color: '#e2e8f0' }}>
                         A inteligência técnica <br className="hidden md:block"/>
                         <span style={{ color: '#ffffff' }}>na palma da sua mão.</span>
