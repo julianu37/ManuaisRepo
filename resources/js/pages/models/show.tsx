@@ -1,5 +1,6 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { Search, Printer, FileText, Download, Eye, ArrowRight, ChevronRight, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { Search, FileText, ArrowRight, Printer, Download, Eye } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 export default function ModelShow({ printerModel, searchTerm, errorResults }: any) {
@@ -7,143 +8,181 @@ export default function ModelShow({ printerModel, searchTerm, errorResults }: an
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        router.get(`/modelo/${printerModel.id}`, { q: query }, { preserveState: true });
+        if (query.trim()) {
+            router.get(`/modelo/${printerModel.id}`, { q: query });
+        } else {
+            router.get(`/modelo/${printerModel.id}`);
+        }
     };
 
     return (
-        <div className="min-h-screen flex flex-col font-sans relative" style={{ backgroundColor: '#061a15', color: '#ffffff' }}>
+        <div className="min-h-screen font-sans flex flex-col" style={{ backgroundColor: '#061a15', color: '#ffffff' }}>
             <Head title={`${printerModel.brand.name} ${printerModel.name} - PrinterDocs`} />
-            
-            {/* Navbar */}
-            <nav className="h-20" style={{ backgroundColor: '#04120e', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <div className="max-w-6xl mx-auto h-full px-6 flex items-center justify-between">
-                    <Link className="flex items-center gap-3" href="/">
+
+            {/* Header / Search Bar */}
+            <header className="sticky top-0 z-20 shadow-xl p-4 border-b" style={{ backgroundColor: '#04120e', borderColor: 'rgba(255,255,255,0.05)' }}>
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6">
+                    <Link href="/" className="flex items-center gap-3 pr-4">
                         <Printer size={28} style={{ color: '#00a36c' }} />
-                        <span className="font-bold text-2xl tracking-tight hidden sm:inline">Printer<span style={{ color: '#00a36c' }}>Docs</span></span>
+                        <span className="text-xl font-bold tracking-tight hidden sm:inline">Printer<span style={{ color: '#00a36c' }}>Docs</span></span>
                     </Link>
-                    <div className="flex gap-4">
-                        <Link href="/" className="font-bold px-4 py-2 flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                            <ArrowLeft size={18} /> Trocar Modelo
-                        </Link>
-                        <Link href="/dashboard" className="font-bold px-6 py-2 rounded transition-colors border hover:bg-white/5 hidden sm:flex" style={{ borderColor: '#00a36c', color: '#00a36c' }}>
-                            Dashboard
-                        </Link>
-                    </div>
-                </div>
-            </nav>
 
-            <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-12">
-                {/* Header do Modelo */}
-                <div className="mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                    <div>
-                        <div className="flex items-center gap-3 mb-2">
-                            <span className="px-3 py-1 text-xs font-bold uppercase rounded bg-[#00a36c] text-white">
-                                {printerModel.brand.name}
-                            </span>
-                            <span className="text-gray-400 text-sm">Central de Diagnóstico</span>
+                    <form onSubmit={handleSearch} className="flex-1 relative w-full flex items-center">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none" style={{ color: '#00a36c' }}>
+                            <Search size={20} />
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold">{printerModel.name}</h1>
-                    </div>
-                </div>
-
-                {/* Grid principal */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
-                    {/* Coluna da Esquerda (Busca de Erros) */}
-                    <div className="lg:col-span-2 space-y-8">
                         
-                        {/* Barra de Busca de Erros */}
-                        <div className="p-6 md:p-8 rounded-xl border bg-[#04120e] border-white/5 shadow-2xl">
-                            <h2 className="text-2xl font-bold mb-2 text-[#e2e8f0]">Buscar Código de Erro</h2>
-                            <p className="text-[#94a3b8] mb-6">Digite o código SC (ex: SC554) ou sintoma para este modelo.</p>
+                        <div className="w-full flex items-center border-b-2 py-1 pl-12 pr-4 transition-all focus-within:border-white" 
+                             style={{ backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '4px', borderColor: '#00a36c' }}>
                             
-                            <form onSubmit={handleSearch} className="flex items-center w-full h-16 shadow-inner relative rounded border focus-within:border-[#f97316] transition-colors"
-                                 style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderColor: 'rgba(255,255,255,0.1)' }}>
-                                <div className="pl-4 pr-2 text-[#f97316]">
-                                    <Search size={22} />
-                                </div>
-                                <input 
-                                    type="text" 
-                                    className="flex-1 min-w-0 h-full bg-transparent border-0 focus:ring-0 focus:outline-none text-lg px-2 text-white" 
-                                    placeholder="Qual o erro?"
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                />
-                                <button type="submit" className="h-12 px-6 font-bold flex items-center gap-2 mr-2 transition-all bg-[#f97316] text-white rounded hover:brightness-110">
-                                    <span className="hidden sm:inline">BUSCAR</span> <ChevronRight size={18} />
-                                </button>
-                            </form>
+                            <Link href="/" className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm mr-2 transition-colors hover:bg-white/10 shrink-0" 
+                                  style={{ backgroundColor: 'rgba(0, 163, 108, 0.15)', border: '1px solid rgba(0, 163, 108, 0.3)', color: '#00a36c' }}
+                                  title="Clique para trocar de modelo">
+                                <span className="font-bold text-xs whitespace-nowrap">
+                                    {printerModel.brand.name} {printerModel.name}
+                                </span>
+                            </Link>
+                            
+                            <input 
+                                type="text"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                className="flex-1 min-w-0 border-none py-2 px-0 focus:ring-0 outline-none text-lg bg-transparent"
+                                style={{ color: '#ffffff' }}
+                                placeholder="Digite o código de erro (ex: SC543)..."
+                            />
                         </div>
+                    </form>
+                    
+                    <Link href="/dashboard" className="hidden md:flex font-bold px-6 py-2 rounded transition-colors border hover:bg-white/5 whitespace-nowrap" style={{ borderColor: '#00a36c', color: '#00a36c' }}>
+                        Dashboard
+                    </Link>
+                </div>
+            </header>
 
-                        {/* Resultados de Erro */}
-                        {errorResults && errorResults.data.length > 0 && (
-                            <div className="space-y-4">
-                                <h3 className="text-xl font-bold mb-6 flex items-center gap-2 border-b pb-2 border-white/5 text-[#f97316]">
-                                    <AlertTriangle size={20} /> Resultados Encontrados ({errorResults.total})
-                                </h3>
-                                
-                                {errorResults.data.map((item: any) => (
-                                    <div key={item.id} className="p-6 rounded-xl border bg-[#04120e] border-white/5 flex flex-col md:flex-row gap-6 items-start md:items-center hover:bg-white/5 transition-colors">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-3 mb-3">
-                                                <span className="font-black text-2xl text-[#f97316]">{item.code}</span>
-                                                <span className="text-xs font-semibold px-2 py-1 rounded bg-white/10 text-[#e2e8f0]">Página {item.page_number}</span>
-                                                <span className="text-xs text-gray-500 italic">{item.manual.title}</span>
-                                            </div>
-                                            <p className="text-sm line-clamp-3 leading-relaxed text-[#94a3b8]">...{item.raw_context}...</p>
-                                        </div>
-                                        <Link 
-                                            href={`/manual/${item.manual_id}/pagina/${item.page_number}`}
-                                            className="w-full md:w-auto px-6 py-3 text-center font-bold text-sm flex items-center justify-center gap-2 transition-colors hover:brightness-110 bg-[#00875a] text-white rounded shrink-0"
-                                        >
-                                            Abrir Página <ArrowRight size={16} />
-                                        </Link>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                        
-                        {errorResults && errorResults.data.length === 0 && (
-                             <div className="p-12 text-center border rounded-xl bg-[#04120e] border-white/5">
-                                 <AlertTriangle size={48} className="mx-auto mb-4 text-[#f97316] opacity-50" />
-                                 <h3 className="text-xl font-bold text-white mb-2">Nenhum erro encontrado</h3>
-                                 <p className="text-[#94a3b8]">Não encontramos nenhum resultado para "{searchTerm}" nos manuais deste modelo.</p>
-                             </div>
-                        )}
-                    </div>
+            <main className="max-w-6xl mx-auto p-6 w-full flex-1">
+                <div className="mb-10 mt-6">
+                    {searchTerm ? (
+                        <>
+                            <p className="mb-2 uppercase tracking-widest text-xs font-bold" style={{ color: '#00a36c' }}>Resultados da Busca</p>
+                            <h2 className="text-3xl md:text-4xl font-bold" style={{ color: '#e2e8f0' }}>
+                                Encontramos {errorResults ? errorResults.total : 0} ocorrências para "<span style={{ color: '#00a36c' }}>{searchTerm}</span>"
+                            </h2>
+                        </>
+                    ) : (
+                        <>
+                            <p className="mb-2 uppercase tracking-widest text-xs font-bold" style={{ color: '#00a36c' }}>Central de Diagnóstico</p>
+                            <h2 className="text-3xl md:text-4xl font-bold" style={{ color: '#e2e8f0' }}>
+                                Modelo {printerModel.brand.name} <span style={{ color: '#00a36c' }}>{printerModel.name}</span>
+                            </h2>
+                        </>
+                    )}
+                </div>
 
-                    {/* Coluna da Direita (Manuais Completos) */}
-                    <div className="space-y-6">
-                        <h3 className="text-xl font-bold flex items-center gap-2 border-b pb-2 border-white/5 text-[#00a36c]">
-                            <FileText size={20} /> Manuais em PDF
-                        </h3>
-                        {printerModel.manuals.length > 0 ? (
-                            printerModel.manuals.map((manual: any) => (
-                                <div key={manual.id} className="p-5 rounded-xl border flex flex-col gap-4 bg-[#04120e] border-white/5 shadow-lg">
+                {/* Seção de Manuais */}
+                <div className="mb-12">
+                    <h3 className="text-xl font-bold mb-6 flex items-center gap-2 border-b pb-2" style={{ borderColor: 'rgba(255,255,255,0.05)', color: '#00a36c' }}>
+                        <FileText size={20} /> Manuais do Modelo ({printerModel.manuals.length})
+                    </h3>
+                    {printerModel.manuals.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {printerModel.manuals.map((manual: any) => (
+                                <div key={manual.id} className="p-5 rounded-xl border flex flex-col justify-between" style={{ backgroundColor: '#04120e', borderColor: 'rgba(255,255,255,0.05)' }}>
                                     <div>
-                                        <h4 className="text-sm font-bold text-white uppercase mb-1">{manual.title}</h4>
-                                        <p className="text-xs text-[#94a3b8]">{manual.total_pages} páginas</p>
+                                        <div className="flex items-start justify-between mb-2">
+                                            <div className="px-2 py-0.5 rounded font-bold uppercase tracking-wide text-[10px]" style={{ backgroundColor: '#00a36c', color: '#ffffff' }}>
+                                                {printerModel.brand.name}
+                                            </div>
+                                            <span className="text-xs font-medium" style={{ color: '#94a3b8' }}>{manual.total_pages} pág.</span>
+                                        </div>
+                                        <h4 className="text-lg font-bold mb-1" style={{ color: '#ffffff' }}>{printerModel.name}</h4>
+                                        <p className="text-sm mb-4" style={{ color: '#94a3b8' }}>{manual.title}</p>
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <a href={`/manual/${manual.id}/stream`} target="_blank" rel="noreferrer" className="w-full flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:bg-white/10 bg-white/5 text-white">
-                                            <Eye size={16} /> Visualizar Inteiro
+                                    <div className="flex gap-2 mt-2">
+                                        <a href={`/manual/${manual.id}/stream`} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:bg-white/10" style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: '#ffffff' }}>
+                                            <Eye size={16} /> Visualizar PDF
                                         </a>
-                                        <a href={`/manual/${manual.id}/stream`} download={`${printerModel.name} - ${manual.title}.pdf`} className="w-full flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:brightness-110 bg-[#00875a] text-white">
-                                            <Download size={16} /> Fazer Download
+                                        <a href={`/manual/${manual.id}/stream`} download={`${printerModel.name} - ${manual.title}.pdf`} className="flex-1 flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:brightness-110" style={{ backgroundColor: '#00875a', color: '#ffffff' }}>
+                                            <Download size={16} /> Baixar PDF
                                         </a>
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <div className="p-6 text-center border rounded-xl bg-[#04120e] border-white/5">
-                                <FileText size={32} className="mx-auto mb-3 text-gray-600" />
-                                <p className="text-sm text-[#94a3b8]">Nenhum manual indexado para este modelo.</p>
-                            </div>
-                        )}
-                    </div>
-                    
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-sm text-[#94a3b8]">Nenhum manual indexado para este modelo.</p>
+                    )}
                 </div>
+
+                {/* Seção de Códigos de Erro */}
+                {searchTerm && errorResults && errorResults.data.length > 0 && (
+                    <div className="mb-12">
+                        <h3 className="text-xl font-bold mb-6 flex items-center gap-2 border-b pb-2" style={{ borderColor: 'rgba(255,255,255,0.05)', color: '#f97316' }}>
+                            <Search size={20} /> Códigos de Erro ({errorResults.total})
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {errorResults.data.map((item: any) => (
+                                <div key={item.id} className="group rounded-xl border shadow-lg transition-all hover:-translate-y-1 overflow-hidden flex flex-col" style={{ backgroundColor: '#04120e', borderColor: 'rgba(255,255,255,0.05)' }}>
+                                    <div className="p-6 flex-1">
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div className="px-3 py-1 rounded font-bold uppercase tracking-wide text-xs" style={{ backgroundColor: '#00a36c', color: '#ffffff' }}>
+                                                {printerModel.brand.name}
+                                            </div>
+                                            <div className="transition-colors opacity-50 group-hover:opacity-100" style={{ color: '#f97316' }}>
+                                                <FileText size={20} />
+                                            </div>
+                                        </div>
+                                        
+                                        <h3 className="text-xl font-bold mb-1 truncate" title={printerModel.name} style={{ color: '#ffffff' }}>
+                                            {printerModel.name}
+                                        </h3>
+                                        <p className="text-sm mb-6 truncate italic" style={{ color: '#94a3b8' }}>
+                                            {item.manual.title}
+                                        </p>
+
+                                        <div className="rounded p-4 border" style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.05)' }}>
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <span className="font-black text-2xl" style={{ color: '#f97316' }}>{item.code}</span>
+                                                <span className="text-sm font-semibold px-2 py-1 rounded" style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: '#e2e8f0' }}>Pág. {item.page_number}</span>
+                                            </div>
+                                            <p className="text-sm line-clamp-3 leading-relaxed" style={{ color: '#94a3b8' }}>
+                                                ...{item.raw_context}...
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <Link 
+                                        href={`/manual/${item.manual_id}/pagina/${item.page_number}`}
+                                        className="p-4 text-center font-bold text-sm flex items-center justify-center gap-2 transition-colors hover:brightness-110"
+                                        style={{ backgroundColor: '#00875a', color: '#ffffff' }}
+                                    >
+                                        Ver Página no Manual <ArrowRight size={16} />
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {searchTerm && errorResults && errorResults.data.length === 0 && (
+                    <div className="py-12 text-center">
+                        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                            <Search size={32} style={{ color: '#f97316', opacity: 0.5 }} />
+                        </div>
+                        <h3 className="text-xl font-bold mb-2" style={{ color: '#ffffff' }}>Nenhum erro encontrado</h3>
+                        <p className="text-sm max-w-md mx-auto" style={{ color: '#94a3b8' }}>
+                            Não encontramos nenhum resultado para "{searchTerm}" neste modelo.
+                        </p>
+                    </div>
+                )}
             </main>
+
+            <footer className="py-6 text-center text-sm border-t mt-auto" style={{ backgroundColor: '#04120e', borderColor: 'rgba(255,255,255,0.05)', color: '#64748b' }}>
+                <div className="flex items-center justify-center gap-2 mb-2 font-bold" style={{ color: '#00a36c' }}>
+                    <Printer size={16} /> PrinterDocs
+                </div>
+                &copy; {new Date().getFullYear()} &bull; Repositório Inteligente de Manuais
+            </footer>
         </div>
     );
 }
