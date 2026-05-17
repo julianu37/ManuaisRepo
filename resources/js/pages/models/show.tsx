@@ -79,41 +79,6 @@ export default function ModelShow({ printerModel, searchTerm, errorResults }: an
                     )}
                 </div>
 
-                {/* Seção de Manuais */}
-                <div className="mb-12">
-                    <h3 className="text-xl font-bold mb-6 flex items-center gap-2 border-b pb-2" style={{ borderColor: 'rgba(255,255,255,0.05)', color: '#00a36c' }}>
-                        <FileText size={20} /> Manuais do Modelo ({printerModel.manuals.length})
-                    </h3>
-                    {printerModel.manuals.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {printerModel.manuals.map((manual: any) => (
-                                <div key={manual.id} className="p-5 rounded-xl border flex flex-col justify-between" style={{ backgroundColor: '#04120e', borderColor: 'rgba(255,255,255,0.05)' }}>
-                                    <div>
-                                        <div className="flex items-start justify-between mb-2">
-                                            <div className="px-2 py-0.5 rounded font-bold uppercase tracking-wide text-[10px]" style={{ backgroundColor: '#00a36c', color: '#ffffff' }}>
-                                                {printerModel.brand.name}
-                                            </div>
-                                            <span className="text-xs font-medium" style={{ color: '#94a3b8' }}>{manual.total_pages} pág.</span>
-                                        </div>
-                                        <h4 className="text-lg font-bold mb-1" style={{ color: '#ffffff' }}>{printerModel.name}</h4>
-                                        <p className="text-sm mb-4" style={{ color: '#94a3b8' }}>{manual.title}</p>
-                                    </div>
-                                    <div className="flex gap-2 mt-2">
-                                        <a href={`/manual/${manual.id}/stream`} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:bg-white/10" style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: '#ffffff' }}>
-                                            <Eye size={16} /> Visualizar PDF
-                                        </a>
-                                        <a href={`/manual/${manual.id}/stream`} download={`${printerModel.name} - ${manual.title}.pdf`} className="flex-1 flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:brightness-110" style={{ backgroundColor: '#00875a', color: '#ffffff' }}>
-                                            <Download size={16} /> Baixar PDF
-                                        </a>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-sm text-[#94a3b8]">Nenhum manual indexado para este modelo.</p>
-                    )}
-                </div>
-
                 {/* Seção de Códigos de Erro */}
                 {searchTerm && errorResults && errorResults.data.length > 0 && (
                     <div className="mb-12">
@@ -165,7 +130,7 @@ export default function ModelShow({ printerModel, searchTerm, errorResults }: an
                 )}
 
                 {searchTerm && errorResults && errorResults.data.length === 0 && (
-                    <div className="py-12 text-center">
+                    <div className="py-12 text-center mb-12">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
                             <Search size={32} style={{ color: '#f97316', opacity: 0.5 }} />
                         </div>
@@ -175,6 +140,41 @@ export default function ModelShow({ printerModel, searchTerm, errorResults }: an
                         </p>
                     </div>
                 )}
+
+                {/* Seção de Manuais */}
+                <div className="mb-12">
+                    <h3 className="text-xl font-bold mb-6 flex items-center gap-2 border-b pb-2" style={{ borderColor: 'rgba(255,255,255,0.05)', color: '#00a36c' }}>
+                        <FileText size={20} /> Manuais do Modelo ({printerModel.manuals.length})
+                    </h3>
+                    {printerModel.manuals.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {printerModel.manuals.map((manual: any) => (
+                                <div key={manual.id} className="p-5 rounded-xl border flex flex-col justify-between" style={{ backgroundColor: '#04120e', borderColor: 'rgba(255,255,255,0.05)' }}>
+                                    <div>
+                                        <div className="flex items-start justify-between mb-2">
+                                            <div className="px-2 py-0.5 rounded font-bold uppercase tracking-wide text-[10px]" style={{ backgroundColor: '#00a36c', color: '#ffffff' }}>
+                                                {printerModel.brand.name}
+                                            </div>
+                                            <span className="text-xs font-medium" style={{ color: '#94a3b8' }}>{manual.total_pages} pág.</span>
+                                        </div>
+                                        <h4 className="text-lg font-bold mb-1" style={{ color: '#ffffff' }}>{printerModel.name}</h4>
+                                        <p className="text-sm mb-4" style={{ color: '#94a3b8' }}>{manual.title}</p>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                        <a href={`/manual/${manual.id}/stream`} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:bg-white/10" style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: '#ffffff' }}>
+                                            <Eye size={16} /> Visualizar PDF
+                                        </a>
+                                        <a href={`/manual/${manual.id}/stream`} download={`${printerModel.name} - ${manual.title}.pdf`} className="flex-1 flex items-center justify-center gap-2 py-2 rounded text-sm font-bold transition-colors hover:brightness-110" style={{ backgroundColor: '#00875a', color: '#ffffff' }}>
+                                            <Download size={16} /> Baixar PDF
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-sm text-[#94a3b8]">Nenhum manual indexado para este modelo.</p>
+                    )}
+                </div>
             </main>
 
             <footer className="py-6 text-center text-sm border-t mt-auto" style={{ backgroundColor: '#04120e', borderColor: 'rgba(255,255,255,0.05)', color: '#64748b' }}>
