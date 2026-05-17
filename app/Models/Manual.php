@@ -20,6 +20,7 @@ class Manual extends Model
         'total_pages',
         'file_size_bytes',
         'status',
+        'type',
         'processing_error',
         'indexed_at',
     ];

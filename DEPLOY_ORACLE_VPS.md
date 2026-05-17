@@ -60,12 +60,17 @@ echo 'vm.swappiness=10' >> /etc/sysctl.conf
 apt install nginx mysql-server supervisor -y
 ```
 
-### 2.2. PHP 8.4 e Extensões
+### 2.2. PHP 8.4, Extensões e Limites de Upload (1GB)
 O Ubuntu padrão não vem com o PHP 8.4. Vamos adicionar o repositório oficial e instalar:
 ```bash
 add-apt-repository ppa:ondrej/php -y
 apt update
 apt install php8.4 php8.4-fpm php8.4-mysql php8.4-mbstring php8.4-xml php8.4-curl php8.4-zip php8.4-sqlite3 php8.4-bcmath php8.4-intl -y
+
+# Aumentar limites de upload para 1GB (necessário para PDFs pesados e ZIPs de manuais Epson)
+sed -i 's/upload_max_filesize = .*/upload_max_filesize = 1G/' /etc/php/8.4/fpm/php.ini
+sed -i 's/post_max_size = .*/post_max_size = 1G/' /etc/php/8.4/fpm/php.ini
+systemctl restart php8.4-fpm
 ```
 
 ### 2.3. Node.js (v20), NPM e Composer
@@ -141,6 +146,8 @@ QUEUE_CONNECTION=database
 composer install --optimize-autoloader --no-dev
 php artisan key:generate
 php artisan migrate --force
+
+# ATENÇÃO: O comando abaixo é CRÍTICO! Sem ele, PDFs e manuais HTML (Epson) extraídos darão erro 403/404.
 php artisan storage:link
 
 npm install
@@ -176,6 +183,9 @@ server {
     add_header X-Content-Type-Options "nosniff";
     index index.php;
     charset utf-8;
+    
+    # Fundamental para suportar os uploads de arquivos ZIP/PDF de até 1GB
+    client_max_body_size 1G;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;

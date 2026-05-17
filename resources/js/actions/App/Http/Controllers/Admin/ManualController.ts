@@ -212,7 +212,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\Admin\ManualController::show
- * @see app/Http/Controllers/Admin/ManualController.php:63
+ * @see app/Http/Controllers/Admin/ManualController.php:106
  * @route '/dashboard/manuais/{manual}'
  */
 export const show = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -227,7 +227,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::show
- * @see app/Http/Controllers/Admin/ManualController.php:63
+ * @see app/Http/Controllers/Admin/ManualController.php:106
  * @route '/dashboard/manuais/{manual}'
  */
 show.url = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -260,7 +260,7 @@ show.url = (args: { manual: number | { id: number } } | [manual: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::show
- * @see app/Http/Controllers/Admin/ManualController.php:63
+ * @see app/Http/Controllers/Admin/ManualController.php:106
  * @route '/dashboard/manuais/{manual}'
  */
 show.get = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -269,7 +269,7 @@ show.get = (args: { manual: number | { id: number } } | [manual: number | { id: 
 })
 /**
 * @see \App\Http\Controllers\Admin\ManualController::show
- * @see app/Http/Controllers/Admin/ManualController.php:63
+ * @see app/Http/Controllers/Admin/ManualController.php:106
  * @route '/dashboard/manuais/{manual}'
  */
 show.head = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -279,7 +279,7 @@ show.head = (args: { manual: number | { id: number } } | [manual: number | { id:
 
     /**
 * @see \App\Http\Controllers\Admin\ManualController::show
- * @see app/Http/Controllers/Admin/ManualController.php:63
+ * @see app/Http/Controllers/Admin/ManualController.php:106
  * @route '/dashboard/manuais/{manual}'
  */
     const showForm = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -289,7 +289,7 @@ show.head = (args: { manual: number | { id: number } } | [manual: number | { id:
 
             /**
 * @see \App\Http\Controllers\Admin\ManualController::show
- * @see app/Http/Controllers/Admin/ManualController.php:63
+ * @see app/Http/Controllers/Admin/ManualController.php:106
  * @route '/dashboard/manuais/{manual}'
  */
         showForm.get = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -298,7 +298,7 @@ show.head = (args: { manual: number | { id: number } } | [manual: number | { id:
         })
             /**
 * @see \App\Http\Controllers\Admin\ManualController::show
- * @see app/Http/Controllers/Admin/ManualController.php:63
+ * @see app/Http/Controllers/Admin/ManualController.php:106
  * @route '/dashboard/manuais/{manual}'
  */
         showForm.head = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -314,7 +314,7 @@ show.head = (args: { manual: number | { id: number } } | [manual: number | { id:
     show.form = showForm
 /**
 * @see \App\Http\Controllers\Admin\ManualController::edit
- * @see app/Http/Controllers/Admin/ManualController.php:71
+ * @see app/Http/Controllers/Admin/ManualController.php:114
  * @route '/dashboard/manuais/{manual}/edit'
  */
 export const edit = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -329,7 +329,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::edit
- * @see app/Http/Controllers/Admin/ManualController.php:71
+ * @see app/Http/Controllers/Admin/ManualController.php:114
  * @route '/dashboard/manuais/{manual}/edit'
  */
 edit.url = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -362,7 +362,7 @@ edit.url = (args: { manual: number | { id: number } } | [manual: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::edit
- * @see app/Http/Controllers/Admin/ManualController.php:71
+ * @see app/Http/Controllers/Admin/ManualController.php:114
  * @route '/dashboard/manuais/{manual}/edit'
  */
 edit.get = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -371,7 +371,7 @@ edit.get = (args: { manual: number | { id: number } } | [manual: number | { id: 
 })
 /**
 * @see \App\Http\Controllers\Admin\ManualController::edit
- * @see app/Http/Controllers/Admin/ManualController.php:71
+ * @see app/Http/Controllers/Admin/ManualController.php:114
  * @route '/dashboard/manuais/{manual}/edit'
  */
 edit.head = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -381,7 +381,7 @@ edit.head = (args: { manual: number | { id: number } } | [manual: number | { id:
 
     /**
 * @see \App\Http\Controllers\Admin\ManualController::edit
- * @see app/Http/Controllers/Admin/ManualController.php:71
+ * @see app/Http/Controllers/Admin/ManualController.php:114
  * @route '/dashboard/manuais/{manual}/edit'
  */
     const editForm = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -391,7 +391,7 @@ edit.head = (args: { manual: number | { id: number } } | [manual: number | { id:
 
             /**
 * @see \App\Http\Controllers\Admin\ManualController::edit
- * @see app/Http/Controllers/Admin/ManualController.php:71
+ * @see app/Http/Controllers/Admin/ManualController.php:114
  * @route '/dashboard/manuais/{manual}/edit'
  */
         editForm.get = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -400,7 +400,7 @@ edit.head = (args: { manual: number | { id: number } } | [manual: number | { id:
         })
             /**
 * @see \App\Http\Controllers\Admin\ManualController::edit
- * @see app/Http/Controllers/Admin/ManualController.php:71
+ * @see app/Http/Controllers/Admin/ManualController.php:114
  * @route '/dashboard/manuais/{manual}/edit'
  */
         editForm.head = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -416,7 +416,7 @@ edit.head = (args: { manual: number | { id: number } } | [manual: number | { id:
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\Admin\ManualController::update
- * @see app/Http/Controllers/Admin/ManualController.php:79
+ * @see app/Http/Controllers/Admin/ManualController.php:122
  * @route '/dashboard/manuais/{manual}'
  */
 export const update = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -431,7 +431,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::update
- * @see app/Http/Controllers/Admin/ManualController.php:79
+ * @see app/Http/Controllers/Admin/ManualController.php:122
  * @route '/dashboard/manuais/{manual}'
  */
 update.url = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -464,7 +464,7 @@ update.url = (args: { manual: number | { id: number } } | [manual: number | { id
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::update
- * @see app/Http/Controllers/Admin/ManualController.php:79
+ * @see app/Http/Controllers/Admin/ManualController.php:122
  * @route '/dashboard/manuais/{manual}'
  */
 update.put = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -473,7 +473,7 @@ update.put = (args: { manual: number | { id: number } } | [manual: number | { id
 })
 /**
 * @see \App\Http\Controllers\Admin\ManualController::update
- * @see app/Http/Controllers/Admin/ManualController.php:79
+ * @see app/Http/Controllers/Admin/ManualController.php:122
  * @route '/dashboard/manuais/{manual}'
  */
 update.patch = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -483,7 +483,7 @@ update.patch = (args: { manual: number | { id: number } } | [manual: number | { 
 
     /**
 * @see \App\Http\Controllers\Admin\ManualController::update
- * @see app/Http/Controllers/Admin/ManualController.php:79
+ * @see app/Http/Controllers/Admin/ManualController.php:122
  * @route '/dashboard/manuais/{manual}'
  */
     const updateForm = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -498,7 +498,7 @@ update.patch = (args: { manual: number | { id: number } } | [manual: number | { 
 
             /**
 * @see \App\Http\Controllers\Admin\ManualController::update
- * @see app/Http/Controllers/Admin/ManualController.php:79
+ * @see app/Http/Controllers/Admin/ManualController.php:122
  * @route '/dashboard/manuais/{manual}'
  */
         updateForm.put = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -512,7 +512,7 @@ update.patch = (args: { manual: number | { id: number } } | [manual: number | { 
         })
             /**
 * @see \App\Http\Controllers\Admin\ManualController::update
- * @see app/Http/Controllers/Admin/ManualController.php:79
+ * @see app/Http/Controllers/Admin/ManualController.php:122
  * @route '/dashboard/manuais/{manual}'
  */
         updateForm.patch = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -528,7 +528,7 @@ update.patch = (args: { manual: number | { id: number } } | [manual: number | { 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Admin\ManualController::destroy
- * @see app/Http/Controllers/Admin/ManualController.php:87
+ * @see app/Http/Controllers/Admin/ManualController.php:130
  * @route '/dashboard/manuais/{manual}'
  */
 export const destroy = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -543,7 +543,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::destroy
- * @see app/Http/Controllers/Admin/ManualController.php:87
+ * @see app/Http/Controllers/Admin/ManualController.php:130
  * @route '/dashboard/manuais/{manual}'
  */
 destroy.url = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -576,7 +576,7 @@ destroy.url = (args: { manual: number | { id: number } } | [manual: number | { i
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::destroy
- * @see app/Http/Controllers/Admin/ManualController.php:87
+ * @see app/Http/Controllers/Admin/ManualController.php:130
  * @route '/dashboard/manuais/{manual}'
  */
 destroy.delete = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -586,7 +586,7 @@ destroy.delete = (args: { manual: number | { id: number } } | [manual: number | 
 
     /**
 * @see \App\Http\Controllers\Admin\ManualController::destroy
- * @see app/Http/Controllers/Admin/ManualController.php:87
+ * @see app/Http/Controllers/Admin/ManualController.php:130
  * @route '/dashboard/manuais/{manual}'
  */
     const destroyForm = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -601,7 +601,7 @@ destroy.delete = (args: { manual: number | { id: number } } | [manual: number | 
 
             /**
 * @see \App\Http\Controllers\Admin\ManualController::destroy
- * @see app/Http/Controllers/Admin/ManualController.php:87
+ * @see app/Http/Controllers/Admin/ManualController.php:130
  * @route '/dashboard/manuais/{manual}'
  */
         destroyForm.delete = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -617,7 +617,7 @@ destroy.delete = (args: { manual: number | { id: number } } | [manual: number | 
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\Admin\ManualController::reprocess
- * @see app/Http/Controllers/Admin/ManualController.php:52
+ * @see app/Http/Controllers/Admin/ManualController.php:95
  * @route '/dashboard/manuais/{manual}/reprocessar'
  */
 export const reprocess = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -632,7 +632,7 @@ reprocess.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::reprocess
- * @see app/Http/Controllers/Admin/ManualController.php:52
+ * @see app/Http/Controllers/Admin/ManualController.php:95
  * @route '/dashboard/manuais/{manual}/reprocessar'
  */
 reprocess.url = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -665,7 +665,7 @@ reprocess.url = (args: { manual: number | { id: number } } | [manual: number | {
 
 /**
 * @see \App\Http\Controllers\Admin\ManualController::reprocess
- * @see app/Http/Controllers/Admin/ManualController.php:52
+ * @see app/Http/Controllers/Admin/ManualController.php:95
  * @route '/dashboard/manuais/{manual}/reprocessar'
  */
 reprocess.post = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -675,7 +675,7 @@ reprocess.post = (args: { manual: number | { id: number } } | [manual: number | 
 
     /**
 * @see \App\Http\Controllers\Admin\ManualController::reprocess
- * @see app/Http/Controllers/Admin/ManualController.php:52
+ * @see app/Http/Controllers/Admin/ManualController.php:95
  * @route '/dashboard/manuais/{manual}/reprocessar'
  */
     const reprocessForm = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -685,7 +685,7 @@ reprocess.post = (args: { manual: number | { id: number } } | [manual: number | 
 
             /**
 * @see \App\Http\Controllers\Admin\ManualController::reprocess
- * @see app/Http/Controllers/Admin/ManualController.php:52
+ * @see app/Http/Controllers/Admin/ManualController.php:95
  * @route '/dashboard/manuais/{manual}/reprocessar'
  */
         reprocessForm.post = (args: { manual: number | { id: number } } | [manual: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
