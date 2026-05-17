@@ -18,7 +18,7 @@ class PublicModelController extends Controller
         if (!empty($query)) {
             $errorResults = ErrorCode::with(['manual', 'manual.printerModel', 'manual.printerModel.brand'])
                 ->whereHas('manual', function ($q) use ($id) {
-                    $q->where('model_id', $id);
+                    $q->where('printer_model_id', $id);
                 })
                 ->where(function ($q) use ($query) {
                     $q->where('code', 'like', "%{$query}%")
